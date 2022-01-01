@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huynh12345678/awesome_chat.git"
+    "url": "git+https://github.com/Huynh12345678/Chat_Room.git"
   },
   "author": "HuynhDev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Huynh12345678/awesome_chat/issues"
+    "url": "https://github.com/Huynh12345678/Chat_Room/issues"
   },
-  "homepage": "https://github.com/Huynh12345678/awesome_chat#readme",
+  "homepage": "https://github.com/Huynh12345678/Chat_Room#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bluebird": "^3.5.3",

@@ -4,7 +4,7 @@
   "authors": [
     "Huynh"
   ],
-  "description": "Các thư viện dùng cho đồ án.",
+  "description": "Các thư viện dùng cho dự án.",
   "main": "src/server.js",
   "private": true,
   "ignore": [
@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "bower_components": "https://github.com/trungquandev/awesome-chat-third-party-libraries.git",
+    "bower_components": "https://github.com/Huynh12345678/Chat_Room_Libraries.git",
     "emojione": "4.5.0"
   }
 }
