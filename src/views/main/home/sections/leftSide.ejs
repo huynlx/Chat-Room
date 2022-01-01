@@ -1,0 +1,170 @@
+<div class="col-sm-3 sidenav no-padding">
+    <div class="left">
+        <div class="top form-group">
+            <select class="form-control" id="select-type-chat">
+                <option data-target="#all-chat" value="all-chat">All chat</option>
+                <option data-target="#user-chat" value="user-chat">Personal chat</option>
+                <option data-target="#group-chat" value="group-chat">Group chat</option>
+            </select>
+            <a href="#groupChatModal" class="create-group-chat" data-toggle="modal"
+                title="Create a new chat group"></a>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="all-chat">
+                <ul class="people no-padding-start">
+                    <% allConversationWithMessages.forEach(function(item){ %>
+                      <%  if(item.members){ %>
+                        <a href="#uid_<%= item._id %>" class="room-chat" data-target="#to_<%= item._id %>">
+                            <li class="person group-chat" data-chat="<%= item._id %>">
+                                <div class="left-avatar">
+                                    <!-- <div class="dot"></div> -->
+                                    <img src="images/users/group-avatar-trungquandev.png" alt="">
+                                </div>
+                                <span class="name">
+                                    <span class="group-chat-name">
+                                        <% if(item.name.length > 15){%>
+                                            <%= item.name.substr(0,13) %><span>...</span> 
+                                            <% } else {%>
+                                            <%= item.name %>
+                                        <% }%>
+                                    </span>
+                                </span>
+                                <span class="time">
+                                    <%= convertTimestampToHumanTime(lastItemOfArray(item.messages).createAt) %>
+                                </span>
+                                <span class="preview convert-emoji">
+                                    <% if (lastItemOfArray(item.messages).messageType === "text") { %>
+                                        <%= lastItemOfArray(item.messages).text %>
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "image") { %>
+                                        Image...
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "file") { %>
+                                        Attachment...
+                                    <% } %>
+                                </span>
+                            </li>
+                        </a>
+                      <%  }else{ %>
+                        <a href="#uid_<%= item._id %>" class="room-chat" data-target="#to_<%= item._id %>">
+                            <li class="person" data-chat="<%= item._id %>">
+                                <div class="left-avatar">
+                                    <div class="dot"></div>
+                                    <img src="images/users/<%= item.avatar %>" alt="">
+                                </div>
+                                <span class="name">
+                                    <% if(item.username.length > 15){%>
+                                        <%= item.username.substr(0,13) %><span>...</span> 
+                                        <% } else {%>
+                                        <%= item.username %>
+                                    <% }%>
+                                </span>
+                                <span class="time">
+                                    <%= convertTimestampToHumanTime(lastItemOfArray(item.messages).createAt) %>
+                                </span>
+                                <span class="preview convert-emoji">
+                                    <% if (lastItemOfArray(item.messages).messageType === "text") { %>
+                                        <%= lastItemOfArray(item.messages).text %>
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "image") { %>
+                                        Images...
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "file") { %>
+                                        Attachments...
+                                    <% } %>
+                                </span>
+                            </li>
+                        </a>    
+                       <% } %>
+                        <% }) %>
+                </ul>
+                <hr style="margin-top: 0;">
+                <div class="read-more-all-chat">
+                    <a href="javascript:void(0)" id="link-read-more-all-chat">
+                        <strong>View more</strong>
+                    </a>
+                    <div class="read-more-all-chat-loading"><div></div><div></div></div>
+                </div>
+                <hr>
+            </div>
+            <div class="tab-pane" id="user-chat">
+                <ul class="people no-padding-start">
+                    <% allConversationWithMessages.forEach(function(item){ %>
+                        <% if(!item.members) { %>
+                        <a href="#uid_<%= item._id %>" class="room-chat" data-target="#to_<%= item._id %>">
+                            <li class="person" data-chat="<%= item._id %>">
+                                <div class="left-avatar">
+                                    <div class="dot"></div>
+                                    <img src="images/users/<%= item.avatar %>" alt="">
+                                </div>
+                                <span class="name">
+                                    <% if(item.username.length > 15){%>
+                                        <%= item.username.substr(0,13) %><span>...</span> 
+                                        <% } else {%>
+                                        <%= item.username %>
+                                    <% }%>
+                                </span>
+                                <span class="time">
+                                    <%= convertTimestampToHumanTime(lastItemOfArray(item.messages).createAt) %>
+                                </span>
+                                <span class="preview convert-emoji">
+                                    <% if (lastItemOfArray(item.messages).messageType === "text") { %>
+                                        <%= lastItemOfArray(item.messages).text %>
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "image") { %>
+                                        Images...
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "file") { %>
+                                        Attachments...
+                                    <% } %>
+                                </span>
+                            </li>
+                        </a>    
+                        <% } %>
+                    <%  }) %>
+                </ul>
+            </div>
+            <div class="tab-pane" id="group-chat">
+                <ul class="people no-padding-start">
+                    <% allConversationWithMessages.forEach(function(item){ %>
+                        <% if(item.members) { %>
+                        <a href="#uid_<%= item._id %>" class="room-chat" data-target="#to_<%= item._id %>">
+                            <li class="person group-chat" data-chat="<%= item._id %>">
+                                <div class="left-avatar">
+                                    <!-- <div class="dot"></div> -->
+                                    <img src="images/users/group-avatar-trungquandev.png" alt="">
+                                </div>
+                                <span class="name">
+                                    <span class="group-chat-name">
+                                        <span class="group-chat-name">
+                                            <% if(item.name.length > 15){%>
+                                                <%= item.name.substr(0,13) %><span>...</span> 
+                                                <% } else {%>
+                                                <%= item.name %>
+                                            <% }%>
+                                        </span>
+                                    </span> 
+                                </span>
+                                <span class="time">
+                                    <%= convertTimestampToHumanTime(lastItemOfArray(item.messages).createAt) %>
+                                </span>
+                                <span class="preview convert-emoji">
+                                    <% if (lastItemOfArray(item.messages).messageType === "text") { %>
+                                        <%= lastItemOfArray(item.messages).text %>
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "image") { %>
+                                        Images...
+                                    <% } %>
+                                    <% if (lastItemOfArray(item.messages).messageType === "file") { %>
+                                        Attachments...
+                                    <% } %>
+                                </span>
+                            </li>
+                        </a>
+                        <% } %>
+                    <%  }) %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

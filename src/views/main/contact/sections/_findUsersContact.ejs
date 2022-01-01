@@ -1,0 +1,24 @@
+<% users.forEach(function(user) { %>
+    <li class="_contactList" data-uid="<%= user._id %>">
+        <div class="contactPanel">
+            <div class="user-avatar">
+                <img src="images/users/<%= user.avatar %>" alt="">
+            </div>
+            <div class="user-name">
+                <p>
+                    <%= user.username %>
+                </p>
+            </div>
+            <br>
+            <div class="user-address">
+                <span>&nbsp; <%= user.address %></span>
+            </div>
+            <div class="user-add-new-contact" data-uid="<%= user._id %>">
+                Add to contact list
+            </div>
+            <div class="user-remove-request-contact-sent action-danger" data-uid="<%= user._id %>">
+                Cancel request
+            </div>
+        </div>
+    </li>
+<% }); %>

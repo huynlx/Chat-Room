@@ -1,0 +1,176 @@
+<div class="modal fade" id="contactsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Contact Management</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#find-user">Find users</a></li>
+                    <li><a data-toggle="tab" id="link-contacts" href="#contacts">
+                            Contacts
+                            <% if (countAllContacts > 0) { %>
+                                <span class="show-number-contacts count-contacts">
+                                    (<em><%= countAllContacts %></em> )
+                                </span>
+                            <% } else { %>
+                                <span class="show-number-contacts count-contacts"></span>
+                            <% } %>
+                        </a></li>
+                    <li><a data-toggle="tab" id="link-request-contact-sent" href="#request-contact-sent">
+                            Awaiting confirmations
+                            <% if (countAllContactsSent > 0) { %>
+                                <span class="show-number-contacts count-request-contact-sent">
+                                    (<em><%= countAllContactsSent %></em> )
+                                </span>
+                            <% } else { %>
+                                <span class="show-number-contacts count-request-contact-sent"></span>
+                            <% } %>
+                        </a></li>
+                    <li><a data-toggle="tab" id="link-request-contact-received" href="#request-contact-received">
+                            Friend requests
+                            <% if (countAllContactsReceived > 0) { %>
+                                <span class="show-number-contacts count-request-contact-received">
+                                    (<em><%= countAllContactsReceived %></em> )
+                                </span>
+                            <% } else { %>
+                                <span class="show-number-contacts count-request-contact-received"></span>
+                            <% } %>
+                        </a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="find-user" class="tab-pane fade in active">
+                        <div class="find-user-top">
+                            <div class="input-group col-md-12">
+                                <input id="input-find-users-contact" autocomplete="new-password" type="text" class="form-control" 
+                                    placeholder="Enter E-mail or username..." /> <!-- https://stackoverflow.com/questions/43132693/how-to-turn-off-html-input-form-field-suggestions -->
+                                <span class="input-group-btn">
+                                    <button class="btn btn-lg" type="button" id="btn-find-users-contact">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="find-user-bottom">
+                            <ul class="contactList">
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="contacts" class="tab-pane fade">
+                        <div class="find-user-bottom">
+                            <ul class="contactList">
+                                <% contacts.forEach(function(user) { %>
+                                <li class="_contactList" data-uid=<%= user._id %>>
+                                    <div class="contactPanel">
+                                        <div class="user-avatar">
+                                            <img src="images/users/<%= user.avatar %>" alt="">
+                                        </div>
+                                        <div class="user-name">
+                                            <p>
+                                                <%= user.username %>
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <div class="user-address">
+                                            <span>&nbsp  <%= user.address %></span>
+                                        </div>
+                                        <div class="user-talk" data-uid="<%= user._id %>">
+                                            Chat
+                                        </div>
+                                        <div class="user-remove-contact action-danger" data-uid="<%= user._id %>">
+                                            Delete contact
+                                        </div>
+                                    </div>
+                                </li>
+                                <% }); %>
+                            </ul>
+                            <hr>
+                            <div class="read-more-contacts">
+                                <a href="javascript:void(0)" id="link-read-more-contacts">
+                                    <strong>See more friends list</strong>
+                                </a>
+                                <div class="read-more-contacts-loading"><div></div><div></div></div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div id="request-contact-sent" class="tab-pane fade">
+                        <div class="find-user-bottom">
+                            <ul class="contactList">
+                                <% contactsSent.forEach(function(user) { %>
+                                <li class="_contactList" data-uid="<%= user._id %>">
+                                    <div class="contactPanel">
+                                        <div class="user-avatar">
+                                            <img src="images/users/<%= user.avatar %>" alt="">
+                                        </div>
+                                        <div class="user-name">
+                                            <p>
+                                                <%= user.username %>
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <div class="user-address">
+                                            <span>&nbsp <%= user.address %></span>
+                                        </div>
+                                        <div class="user-remove-request-contact-sent action-danger display-important" data-uid="<%= user._id %>">
+                                            Cancel request
+                                        </div>
+                                    </div>
+                                </li>
+                                <% }); %>    
+                            </ul>
+                            <hr>
+                            <div class="read-more-contacts-sent">
+                                <a href="javascript:void(0)" id="link-read-more-contacts-sent">
+                                    <strong>See more confirmation waiting list</strong>
+                                </a>
+                                <div class="read-more-contacts-loading"><div></div><div></div></div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div id="request-contact-received" class="tab-pane fade">
+                        <div class="find-user-bottom">
+                            <ul class="contactList">
+                                <% contactsReceived.forEach(function(user) { %>
+                                <li class="_contactList" data-uid="<%= user._id %>">
+                                    <div class="contactPanel">
+                                        <div class="user-avatar">
+                                            <img src="images/users/<%= user.avatar %>" alt="">
+                                        </div>
+                                        <div class="user-name">
+                                            <p>
+                                                <%= user.username %>
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <div class="user-address">
+                                            <span>&nbsp <%= user.address %></span>
+                                        </div>
+                                        <div class="user-approve-request-contact-received" data-uid="<%= user._id %>">
+                                            Accept
+                                        </div>
+                                        <div class="user-remove-request-contact-received action-danger"
+                                            data-uid="<%= user._id %>">
+                                            Delete request
+                                        </div>
+                                    </div>
+                                </li>
+                                <% }); %>
+                            </ul>
+                            <hr>
+                            <div class="read-more-contacts-received">
+                                <a href="javascript:void(0)" id="link-read-more-contacts-received">
+                                    <strong>See more friend requests</strong>
+                                </a>
+                                <div class="read-more-contacts-loading"><div></div><div></div></div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

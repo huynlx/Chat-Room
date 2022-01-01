@@ -1,0 +1,9 @@
+<% newMessages.forEach(function(message) { %>
+  <% if (message.messageType === "file") { %>
+      <li>
+          <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" download="<%= message.file.fileName %>">
+              <%= message.file.fileName %>
+          </a>
+      </li>
+  <% } %>
+<% }); %>

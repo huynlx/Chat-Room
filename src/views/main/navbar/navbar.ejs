@@ -1,0 +1,98 @@
+<nav class="navbar navbar-inverse no-margin-bottom">
+    <div class="container-fluid custom-fluid">
+        <!-- <img class="img-navbar" src="/images/users/1639906514643-f2572c7e-30a3-42d0-ac91-a3142b7a7678-messi-ballon-dor-scaled.jpg" alt=""> -->
+        <div class="navbar-header col-sm-3 navbar-left">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" style="font-size: 30px;color:white">
+                CHAT ROOM
+                <!-- <img src="./images/logo_favicon/logo-trungquandev.png" alt="logo-cua-tui"> -->
+            </a>
+        </div>
+        <div class="col-sm-3 no-padding">
+            <ul class="nav navbar-nav navbar-left no-padding-start">
+                <li>
+                    <input type="text" name="search" class="searchBox" placeholder="Tìm kiếm tên cuộc trò chuyện">
+                    <div id="search-results">
+                        <h3>Result</h3>
+                        <div class="search_content">
+                            <ul></ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse col-sm-6 navbar-right" id="myNavbar">
+            <div id="time"></div>
+            <ul class="nav navbar-nav navbar-right">
+                <!-- <li>
+                    <a href="/" title="Home page">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li> -->
+                <li>
+                    <a href="#contactsModal" data-toggle="modal" title="Contact Management" id="show-modal-contacts">
+                        <i class="fa fa-address-book"></i>
+                        <% if ((countAllContactsSent + countAllContactsReceived) > 0) { %>
+                            <div class="noti_contact_counter">
+                                <%= (countAllContactsSent + countAllContactsReceived) %>
+                            </div>  
+                        <% } else { %>
+                            <div class="noti_contact_counter display-none"></div>
+                        <% } %>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" id="noti_Button" data-toggle="modal" title="Notifications">
+                        <i class="fa fa-bell"></i>
+                        <% if(countNotifUnread > 0){ %>
+                            <div class="noti_counter">
+                                <%= countNotifUnread %>
+                            </div>
+                            <% }else{ %>
+                                <div class="noti_counter display-none"></div>
+                                <% } %>
+                                    <div id="noti_Container">
+                                        <div id="notifications">
+                                            <a href="javascript:void(0)" id="popup-mark-notifi-as-read">Mark all as read</a>
+                                            <div class="noti_content">
+                                                <% notifications.forEach(function(item){ %>
+                                                    <%- item %>
+                                                        <% }) %>
+                                            </div>
+                                            <div class="seeAll"><a href="#notificationsModal" data-toggle="modal">View all</a></div>
+                                        </div>
+                                    </div>
+                    </a>
+                </li>
+                <li class="dropdown" id="dropdown-navbar-user" data-uid="<%= user._id %>">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <img id="navbar-avatar" class="avatar-small" src="images/users/<%= user.avatar %> " alt="">
+                        <span id="navbar-username">
+                            <%= user.username %>
+                        </span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#user-profile-modal" data-toggle="modal">
+                                <i class="fa fa-cog"></i>
+                                &nbsp;Account Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="javascript:location.href='/logout'">
+                                <!-- https://stackoverflow.com/questions/34624276/how-to-hide-the-url-when-hover-over-a-link -->
+                                <i class="fa fa-sign-out"></i>
+                                &nbsp;Log out
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,52 @@
+{
+  "name": "chat_room",
+  "version": "1.0.0",
+  "description": "Đồ án",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Huynh12345678/awesome_chat.git"
+  },
+  "author": "HuynhDev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Huynh12345678/awesome_chat/issues"
+  },
+  "homepage": "https://github.com/Huynh12345678/awesome_chat#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bluebird": "^3.5.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.1",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^10.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.17.1",
+    "express-ejs-extend": "^0.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^4.3.0",
+    "fs-extra": "^7.0.1",
+    "googleapis": "^92.0.0",
+    "moment": "^2.25.3",
+    "mongoose": "^4.13.9",
+    "multer": "^1.4.0",
+    "nodemailer": "^4.4.2",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "passport.socketio": "^3.7.0",
+    "request": "^2.88.0",
+    "socket.io": "^2.2.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.14"
+  }
+}

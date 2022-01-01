@@ -1,0 +1,15 @@
+<% if(errors!="" ){ %>
+    <script>openLoginModal()</script>
+    <% errors.forEach((item)=>{ %>
+        <div class='alert alert-danger'><%- item  %></div>
+    <%})%>
+<% } %>
+
+<% if(success!="" ){ %>
+    <script>openLoginModal()</script>
+    <% success.forEach((item)=>{ %>
+        <div class="alert alert-success"><%- item  %></div>    <%})%>
+<% } %>
+
+
+

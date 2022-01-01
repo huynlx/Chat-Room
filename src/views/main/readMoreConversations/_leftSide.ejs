@@ -1,0 +1,65 @@
+<% newAllConversations.forEach(function(conversation) { %>
+  <% if(conversation.members) { %>
+      <a href="#uid_<%= conversation._id %>" class="room-chat" data-target="#to_<%= conversation._id %>">
+          <li class="person group-chat" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                  <!-- <div class="dot"></div> -->
+                  <img src="images/users/group-avatar-trungquandev.png" alt="">
+              </div>
+              <span class="name">
+                  <span class="group-chat-name">
+                      <% if (conversation.name.length > 15) { %>
+                          <%= conversation.name.substr(0, 14) %><span>...</span>
+                      <% } else { %>
+                          <%= conversation.name %>
+                      <% } %>
+                  </span>
+              </span>
+              <span class="time">
+                  <%= convertTimestampToHumanTime(lastItemOfArray(conversation.messages).createdAt) %>
+              </span>
+              <span class="preview">
+                  <% if (lastItemOfArray(conversation.messages).messageType === "text") { %>
+                      <%= lastItemOfArray(conversation.messages).text %>
+                  <% } %>
+                  <% if (lastItemOfArray(conversation.messages).messageType === "image") { %>
+                      Image...
+                  <% } %>
+                  <% if (lastItemOfArray(conversation.messages).messageType === "file") { %>
+                      Attachment...
+                  <% } %>
+              </span>
+          </li>
+      </a>
+  <% } else { %>
+      <a href="#uid_<%= conversation._id %>" class="room-chat" data-target="#to_<%= conversation._id %>">
+          <li class="person" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                  <div class="dot"></div>
+                  <img src="images/users/<%= conversation.avatar %>" alt="">
+              </div>
+              <span class="name">
+                  <% if (conversation.username.length > 15) { %>
+                      <%= conversation.username.substr(0, 14) %><span>...</span>
+                  <% } else { %>
+                      <%= conversation.username %>
+                  <% } %>     
+              </span>
+              <span class="time">
+                  <%= convertTimestampToHumanTime(lastItemOfArray(conversation.messages).createdAt) %>
+              </span>
+              <span class="preview">
+                  <% if (lastItemOfArray(conversation.messages).messageType === "text") { %>
+                      <%= lastItemOfArray(conversation.messages).text %>
+                  <% } %>
+                  <% if (lastItemOfArray(conversation.messages).messageType === "image") { %>
+                      Image...
+                  <% } %>
+                  <% if (lastItemOfArray(conversation.messages).messageType === "file") { %>
+                      Attachment...
+                  <% } %>
+              </span>
+          </li>
+      </a>
+  <% } %>
+<% }); %>

@@ -1,0 +1,38 @@
+<div class="modal fade" id="groupChatModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create a new chat group.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-5 col-sm-12 find-user-add-to-group">
+                    <div class="row form-search-to-add">
+                        <div class="form-group">
+                            <input autocomplete="new-password" type="text" class="form-control" id="input-search-friends-to-add-group-chat" placeholder="Enter your friend's E-mail or username..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-lg" type="button" id="btn-search-friends-to-add-group-chat">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row result-searched">
+                        <ul id="group-chat-friends">
+                            <!-- data from server -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12 list-user-added">
+                    <ul id="friends-added"></ul>
+                    <div class="text-center" id="action-create-name-chat">
+                        <input type="text" class="form-control" id="input-name-group-chat" placeholder="Enter group chat name..." />
+                        <br>
+                        <button type="button" class="btn btn-primary" id="btn-create-group-chat">Create</button>
+                        <button type="button" class="btn btn-danger" id="btn-cancel-group-chat">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

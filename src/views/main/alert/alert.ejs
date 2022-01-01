@@ -1,0 +1,6 @@
+<% if(success!="" ){ %>
+    <% success.forEach((item)=>{ %>
+        <!-- https://stackoverflow.com/questions/11024840/ejs-versus -->
+        <div class="master-success-message alert alert-success" style="display:none"><%- item  %></div>   
+    <%})%>
+<% } %>

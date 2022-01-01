@@ -1,0 +1,33 @@
+<div class="modal fade" id="notificationsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">All notifications.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="mark-notif-as-read">
+                    <a href="javascript:void(0)" id="modal-mark-notifi-as-read">
+                        <strong>Mark all as read</strong>
+                    </a>
+                </div>
+                <hr>
+                <ul class="list-notifications">
+                    <% notifications.forEach(function(item){ %>
+                        <li>
+                            <%- item %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <hr>
+                <div class="read-more-notif">
+                    <a href="javascript:void(0)" id="link-read-more-notif">
+                        <strong>View more</strong>
+                    </a>
+                    <div class="read-more-notif-loading"><div></div><div></div></div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>

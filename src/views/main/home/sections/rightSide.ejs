@@ -1,0 +1,209 @@
+<div class="col-sm-9 sidenav no-padding">
+    <div id="img-chat-modal" class="modal-img">
+        <!-- The Close Button -->
+        <span class="close-img">&times;</span>
+
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content-img" id="img-chat-modal-content">
+    </div>
+    <div class="tab-content" id="screen-chat">
+        <% allConversationWithMessages.forEach(function(item,index){ %>
+            <% if(item.members){%>
+                <div class="right tab-pane <% if(index===0){ %> active <% } %>" data-chat="<%= item._id %>"
+                    id="to_<%= item._id %>">
+                    <div class="top">
+                        <span>To: <span class="name" style="color: #FF7675;">
+                                <%= item.name %> Group
+                            </span></span>
+                        <span>
+                            <span class="chat-menu-right">
+                                <a title='Attachments' href="#attachmentsModal_<%= item._id %>" class="show-attachments"
+                                    data-toggle="modal">
+                                    
+                                    <i class="fa fa-paperclip"></i>
+                                </a>
+                            </span>
+                            <span class="chat-menu-right">
+                                <a href="javascript:void(0)">&nbsp;</a>
+                            </span>
+                            <span class="chat-menu-right">
+                                <a title='Images' href="#imagesModal_<%= item._id %>" class="show-images" data-toggle="modal">
+                                    
+                                    <i class="fa fa-photo"></i>
+                                </a>
+                            </span>
+                            <span class="chat-menu-right">
+                                <a href="javascript:void(0)">&nbsp;</a>
+                            </span>
+                            <span class="chat-menu-right">
+                                <a title='Members' href="#groupMembersModal_<%= item._id %>" class="number-members" data-toggle="modal">
+                                    <span class="show-number-members">
+                                        <%= item.userAmount %>
+                                    </span>
+                                    <i class="fa fa-users"></i>
+                                </a>
+                            </span>
+                            <span class="chat-menu-right">
+                                <a href="javascript:void(0)">&nbsp;</a>
+                            </span>
+                            <!-- <span class="chat-menu-right">
+                                <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
+                                    <span class="show-number-messages">
+                                        <%= item.messageAmount %>
+                                    </span>
+                                    <i class="fa fa-comments-o"></i>
+                                </a>
+                            </span> -->
+                        </span>
+                        <!--  <span class="chat-menu-right">
+                            <a href="javascript:void(0)">&nbsp;</a>
+                        </span>
+                        <span class="chat-menu-right">
+                            <a href="#addMemberModal_<%= item._id %>" class="add-member-to-group" data-toggle="modal">
+                                <i class="fa fa-user-plus"></i>
+                            </a>
+                        </span>      -->
+                    </div>
+                    <div class="content-chat">
+                        <div class="chat chat-in-group" data-chat="<%= item._id %>">
+                            <% item.messages.forEach(function(message) { %>
+                                <% if (message.messageType==="text" ) { %>
+                                    <div class="bubble convert-emoji <% if (message.senderId == user._id) { %> me <% } else { %> you <% } %>"
+                                        data-mess-id="<%= message._id %>">
+                                        <img src="/images/users/<%= message.sender.avatar %>" class="avatar-small"
+                                            title="<%= message.sender.name %>">
+                                       <%= message.text %>
+                                    </div>
+                                    <% } %>
+                                        <% if (message.messageType==="image" ) { %>
+                                            <div class="bubble <% if (message.senderId == user._id) { %> me <% } else { %> you <% } %> bubble-image-file"
+                                                data-mess-id="<%= message._id %>">
+                                                <img src="/images/users/<%= message.sender.avatar %>"
+                                                    class="avatar-small" title="<%= message.sender.name %>">
+                                                <img src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>"
+                                                    class="show-image-chat">
+
+                                            </div>
+                                            <% } %>
+                                                <% if (message.messageType==="file" ) { %>
+                                                    <div class="bubble <% if (message.senderId == user._id) { %> me <% } else { %> you <% } %> bubble-attachment-file"
+                                                        data-mess-id="<%= message._id %>">
+                                                        <img src="/images/users/<%= message.sender.avatar %>"
+                                                            class="avatar-small" title="<%= message.sender.name %>">
+                                                        <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>"
+                                                            download="<%= message.file.fileName %>">
+                                                            <%= message.file.fileName %>
+                                                        </a>
+                                                    </div>
+                                                    <% } %>
+                                                        <% }); %>
+                        </div>
+                    </div>
+                    <div class="write" data-chat="<%= item._id %>">
+                        <input type="text" id="write-chat-<%= item._id %>" class="write-chat chat-in-group"
+                            data-chat="<%= item._id %>">
+                        <div class="icons">
+                            <a href="#" class="icon-chat" data-chat="<%= item._id %>"><i class="fa fa-smile-o"></i></a>
+                            <label title="Images" for="image-chat-<%= item._id %>">
+                                <input type="file" id="image-chat-<%= item._id %>" name="my-image-chat"
+                                    class="image-chat chat-in-group" data-chat="<%= item._id %>">
+                                <i class="fa fa-photo"></i>
+                            </label>
+                            <label title="Attachments" for="attachment-chat-<%= item._id %>">
+                                <input type="file" id="attachment-chat-<%= item._id %>" name="my-attachment-chat"
+                                    class="attachment-chat chat-in-group" data-chat="<%= item._id %>">
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <a title="Video Call" href="javascript:void(0)" id="video-chat-group">
+                                <i class="fa fa-phone"></i>
+                            </a>
+                            <a class="icon-send" data-chat="<%= item._id %>"><i class="fa fa-send-o"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <% } else {%>
+                    <div class="right tab-pane <% if(index===0){ %> active <% } %>" data-chat="<%= item._id %>"
+                        id="to_<%= item._id %>">
+                        <div class="top">
+                            <span class='info-top'>
+                                <img class="avatar-top" src="images/users/<%= item.avatar %> " alt="">
+                                <span class="name">
+                                    <%= item.username %>
+                                </span>
+                            </span>
+                            <span>
+                                <span class="chat-menu-right">
+                                    <a title="Attachments" href="#attachmentsModal_<%= item._id %>" class="show-attachments"
+                                        data-toggle="modal">
+                                        
+                                        <i class="fa fa-paperclip"></i>
+                                    </a>
+                                </span>
+                                <span class="chat-menu-right">
+                                    <a href="javascript:void(0)">&nbsp;</a>
+                                </span>
+                                <span class="chat-menu-right">
+                                    <a title="Images" href="#imagesModal_<%= item._id %>" class="show-images" data-toggle="modal">
+                                        
+                                        <i class="fa fa-photo"></i>
+                                    </a>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="content-chat">
+                            <div class="chat" data-chat="<%= item._id %>">
+                                <% item.messages.forEach(function(message) { %>
+                                    <% if (message.messageType==="text" ) { %>
+                                        <div class="bubble convert-emoji <% if (message.senderId == user._id) { %> me <% } else { %> you <% } %>"
+                                            data-mess-id="<%= message._id %>">
+                                            <%= message.text %>
+                                        </div>
+                                        <% } %>
+                                            <% if (message.messageType==="image" ) { %>
+                                                <div class="bubble <% if (message.senderId == user._id) { %> me <% } else { %> you <% } %> bubble-image-file"
+                                                    data-mess-id="<%= message._id %>">
+                                                    <img src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>"
+                                                        class="show-image-chat">
+
+                                                </div>
+                                                <% } %>
+                                                    <% if (message.messageType==="file" ) { %>
+                                                        <div class="bubble <% if (message.senderId == user._id) { %> me <% } else { %> you <% } %> bubble-attachment-file"
+                                                            data-mess-id="<%= message._id %>">
+                                                            <a href="data:<%= message.file.contentType %>; base64, <%= bufferToBase64(message.file.data) %>"
+                                                                download="<%= message.file.fileName %>">
+                                                                <%= message.file.fileName %>
+                                                            </a>
+                                                        </div>
+                                                        <% } %>
+                                                            <% }); %>
+                            </div>
+                        </div>
+                        <div class="write" data-chat="<%= item._id %>">
+                            <input type="text" id="write-chat-<%= item._id %>" class="write-chat"
+                                data-chat="<%= item._id %>">
+                            <div class="icons">
+                                <a href="#" class="icon-chat" data-chat="<%= item._id %>"><i
+                                        class="fa fa-smile-o"></i></a>
+                                <label title="Images" for="image-chat-<%= item._id %>">
+                                    <input type="file" id="image-chat-<%= item._id %>" name="my-image-chat"
+                                        class="image-chat" data-chat="<%= item._id %>">
+                                    <i class="fa fa-photo"></i>
+                                </label>
+                                <label title="Attachments" for="attachment-chat-<%= item._id %>">
+                                    <input type="file" id="attachment-chat-<%= item._id %>" name="my-attachment-chat"
+                                        class="attachment-chat" data-chat="<%= item._id %>">
+                                    <i class="fa fa-paperclip"></i>
+                                </label>
+                                <a title="Video Call" href="javascript:void(0)" id="video-chat-<%= item._id %>" class="video-chat"
+                                    data-chat="<%= item._id %>">
+                                    <i class="fa fa-phone"></i>
+                                </a>
+                                <a title="Send message" class="icon-send" data-chat="<%= item._id %>"><i class="fa fa-send-o"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                        <% }) %>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<% allConversationWithMessages.forEach(function(conversation, index) { %>
+    <div class="modal fade" id="attachmentsModal_<%= conversation._id %>" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Files Uploaded</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-attachments">
+                        <% conversation.messages.forEach(function(message) { %>
+                            <% if (message.messageType === "file") { %>
+                                <li>
+                                    <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" download="<%= message.file.fileName %>">
+                                        <%= message.file.fileName %>
+                                    </a>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<% }); %>

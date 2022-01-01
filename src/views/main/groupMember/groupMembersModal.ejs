@@ -1,0 +1,79 @@
+<% var userId = JSON.stringify(user._id); %>
+<% allConversationWithMessages.forEach(function(conversation, index) { %>
+    <!-- <% if(conversation.members) { %> -->
+        <div class="modal fade" id="groupMembersModal_<%= conversation._id %>" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content"> 
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Chat group members</h4>
+                    </div>
+                    <div class="modal-body">
+                                    <ul class="membersList">
+                                        <% conversation.membersInfo.forEach(function(user) { %>
+                                                <% if(userId==JSON.stringify(user._id)){ %>
+                                                    <li class="_membersList" data-uid="<%= user._id %>">
+                                                        <div class="contactPanel">
+                                                            <div class="user-avatar">
+                                                                <img src="images/users/<%= user.avatar %>" alt="">
+                                                            </div>
+                                                            <div class="user-name is-you">
+                                                                <p>
+                                                                    <%= user.username %>
+                                                                </p>
+                                                            </div>
+                                                            <br>
+                                                            <div class="user-address">
+                                                                <span>&nbsp <%= user.address %></span>
+                                                            </div>
+                                                            <div data-uid="<%= user._id %>" class="is-you">
+                                                                <span style="font-weight: bold;">( You )</span>
+                                                            </div>
+                                                           <!--  <div class="remove-user action-danger" data-uid="<%= user._id %>">
+                                                                Xóa thành viên
+                                                            </div> -->
+                                                        </div>
+                                                    </li>
+                                               <% }else{ %>
+                                                    <li class="_membersList" data-uid="<%= user._id %>">
+                                                    <div class="contactPanel">
+                                                        <div class="user-avatar">
+                                                            <img src="images/users/<%= user.avatar %>" alt="">
+                                                        </div>
+                                                        <div class="user-name">
+                                                            <p>
+                                                                <%= user.username %>
+                                                            </p>
+                                                        </div>
+                                                        <br>
+                                                        <div class="user-address">
+                                                            <span>&nbsp <%= user.address %></span>
+                                                        </div>
+                                                        <div class="user-talk" data-uid="<%= user._id %>">
+                                                            Chat
+                                                        </div>
+                                                       <!--  <div class="remove-user action-danger" data-uid="<%= user._id %>">
+                                                            Xóa thành viên
+                                                        </div> -->
+                                                    </div>
+                                                </li>
+                                              <% }; %>                                             
+                                        <% }); %>
+                                    </ul>
+                                   <!--  <hr>
+                                    <div class="read-more-contacts">
+                                        <a href="javascript:void(0)" id="link-read-more-contacts">
+                                            <strong>Xem thêm danh sách bạn bè</strong>
+                                        </a>
+                                        <div class="read-more-contacts-loading"><div></div><div></div></div>
+                                    </div>
+                                    <hr> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- <% } %> -->
+<% }); %>

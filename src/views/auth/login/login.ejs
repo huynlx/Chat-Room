@@ -1,0 +1,26 @@
+<div class="box">
+    <div class="content">
+        <div class="form loginBox">
+            <form method='post' action='/login'>
+                <input type="text" name="email" placeholder="Email" class="form-control" required>
+                <input type="password" name="password" placeholder="Password" class="form-control" required>
+                <input type="submit" value="Login" class="btn btn-default btn-login">
+            </form>
+        </div>
+        <div class="division">
+            <div class="line l"></div>
+            <span>or</span>
+            <div class="line r"></div>
+        </div>
+        <div class="error"></div>
+        <div class="social">
+            <a onclick=javascript:location.href='/auth/google' id="google_login" class="circle google" title="Login with Google Account">
+                <i class="fa fa-google-plus fa-fw"></i>
+            </a>
+            <a onclick=javascript:location.href='/auth/facebook' id="facebook_login" class="circle facebook" title="Login with Facebook Account">
+                <i class="fa fa-facebook fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</div>
+

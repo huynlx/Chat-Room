@@ -1,0 +1,22 @@
+{
+  "name": "bower_components",
+  "version": "1.0.1",
+  "authors": [
+    "Huynh"
+  ],
+  "description": "Các thư viện dùng cho đồ án.",
+  "main": "src/server.js",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bower_components": "https://github.com/trungquandev/awesome-chat-third-party-libraries.git",
+    "emojione": "4.5.0"
+  }
+}
