@@ -78,8 +78,6 @@ let initRoutes = (app) => {
 
     //group chat
     router.post("/group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);
-    router.delete("/group-chat/remove-member", auth.checkLoggedIn, groupChat.removeMember);
-    router.post("/group-chat/add-more-member", auth.checkLoggedIn, groupChat.addNewMembers);
 
     return app.use("/", router)
 }

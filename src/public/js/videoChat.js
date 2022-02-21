@@ -30,18 +30,9 @@ $(document).ready(function() {
     alertify.notify("This user is currently offline!", "error", 7);
   });
 
-  let iceServerList = $("#ice-server-list").val();
-
   let getPeerId = "";
-  const peer = new Peer({
-    key: "peerjs",
-    host: "peerjs-server-trungquandev.herokuapp.com",
-    secure: true,
-    port: 443,
-    config: {"iceServers": JSON.parse(iceServerList)}
-    //debug: 3
-  });
-  // const peer = new Peer();
+
+  const peer = new Peer();
 
   peer.on("open", function(peerId) {
     getPeerId = peerId;
@@ -197,6 +188,7 @@ $(document).ready(function() {
 
     //peerjs.com Media calls - call
     //fix lỗi https://stackoverflow.com/a/27552062
+    //MediaStream API of WebRTC
     let getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia).bind(navigator);
     
     getUserMedia({video: true, audio: true}, function(stream) {

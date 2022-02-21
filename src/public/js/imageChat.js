@@ -39,7 +39,7 @@ function imageChat(divId) {
           };
   
           let myMessage = $(`<div class="bubble me bubble-image-file" data-mess-id="${data.message._id}"></div>`);
-          let imageChat = `<img src="data:${data.message.file.contentType}; base64, ${bufferToBase64(data.message.file.data.data)}" class="show-image-chat">`;
+          let imageChat = `<img title=${data.message.file.fileName} src="data:${data.message.file.contentType}; base64, ${bufferToBase64(data.message.file.data.data)}" class="show-image-chat">`;
   
           if (isChatGroup) {
             let senderAvatar = `<img src="/images/users/${data.message.sender.avatar}" class="avatar-small" title="${data.message.sender.name}" />`;
@@ -67,7 +67,7 @@ function imageChat(divId) {
   
           socket.emit("chat-image", dataToEmit);
   
-          let imageChatToAddModal = `<img src="data:${data.message.file.contentType}; base64, ${bufferToBase64(data.message.file.data.data)}">`;
+          let imageChatToAddModal = `<img title=${data.message.file.fileName} src="data:${data.message.file.contentType}; base64, ${bufferToBase64(data.message.file.data.data)}">`;
 
           $(`#imagesModal_${divId}`).find("div.all-images").append(imageChatToAddModal);
         },
@@ -83,7 +83,7 @@ function imageChat(divId) {
       let divId = "";
   
       let yourMessage = $(`<div class="bubble you bubble-image-file" data-mess-id="${response.message._id}"></div>`);
-      let imageChat = `<img src="data:${response.message.file.contentType}; base64, ${bufferToBase64(response.message.file.data.data)}" class="show-image-chat">`;
+      let imageChat = `<img title=${response.message.file.fileName} src="data:${response.message.file.contentType}; base64, ${bufferToBase64(response.message.file.data.data)}" class="show-image-chat">`;
       
       if (response.currentGroupId) {
         let senderAvatar = `<img src="/images/users/${response.message.sender.avatar}" class="avatar-small" title="${response.message.sender.name}" />`;
@@ -116,7 +116,7 @@ function imageChat(divId) {
       $(`.person[data-chat=${divId}]`).trigger("livechat.moveConversationToTop");
   
       if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
-        let imageChatToAddModal = `<img src="data:${response.message.file.contentType}; base64, ${bufferToBase64(response.message.file.data.data)}">`;
+        let imageChatToAddModal = `<img title=${response.message.file.fileName} src="data:${response.message.file.contentType}; base64, ${bufferToBase64(response.message.file.data.data)}">`;
         $(`#imagesModal_${divId}`).find("div.all-images").append(imageChatToAddModal);
       }
     });

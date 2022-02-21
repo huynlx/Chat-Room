@@ -4,9 +4,6 @@ import { google } from 'googleapis';
 require('dotenv').config();
 
 let adminEmail = process.env.MAIL_USER;
-// let adminPassword = process.env.MAIL_PASSWORD;
-// let mailHost = process.env.MAIL_HOST;
-// let mailPort = process.env.MAIL_PORT;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -35,7 +32,7 @@ let sendMail = async (to, subject, htmlContent) => {
             from: '"Chat Room"' + adminEmail, //sender address
             to: to, //list of receviers
             subject: subject, //subject line
-            html: htmlContent, //html body,
+            html: htmlContent, //html body
             text: "Hello World?" //plain text body (có cái này mới gửi đc cho mail outlook)
         });
         console.log(options);

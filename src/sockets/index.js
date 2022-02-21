@@ -11,8 +11,6 @@ import chatAttachment from "./chat/chatAttachment";
 import chatVideo from "./chat/chatVideo";
 import userOnlineOffline from "./status/userOnlineOffline";
 import newGroupChat from "./group/newGroupChat";
-import removeMemberFromGroup from "./group/removeMemberFromGroup";
-
 
 let initSockets = (io) => { //param io from socket.io library
     addNewContact(io);
@@ -28,7 +26,6 @@ let initSockets = (io) => { //param io from socket.io library
     chatVideo(io);
     userOnlineOffline(io);
     newGroupChat(io);
-    removeMemberFromGroup(io);
 }
 
 module.exports = initSockets;

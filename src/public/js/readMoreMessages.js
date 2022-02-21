@@ -6,8 +6,6 @@ function readMoreMessages() {
     let currentOffset = firstMessage.offset().top - $(this).scrollTop();
 
     if ($(this).scrollTop() === 0) {
-      // let messageLoading = `<img src="images/chat/message-loading.gif" class="message-loading" />`;
-      // $(this).prepend(messageLoading);
       
       let targetId = $(this).data("chat");
       let skipMessage = $(this).find("div.bubble").length;

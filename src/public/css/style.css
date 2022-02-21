@@ -938,8 +938,9 @@ label:focus,
 } */
 
 .bubble-typing-gif {
-  margin-left: -20px !important;
-  background-color: #fff !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
 }
 
 .bubble-typing-gif:before {
@@ -1150,7 +1151,6 @@ label:focus,
 
 .right .bubble.you a {
   float: right;
-  border-bottom: 1.5px solid #c8d6e5;
   padding: 5px;
 }
 
@@ -1549,6 +1549,7 @@ label:focus,
 
 ul.membersList {
   display: flex;
+  flex-wrap: wrap;
 }
 
 ul.membersList li {
@@ -1796,8 +1797,19 @@ ul.membersList li {
   align-items: center;
 }
 
-.personal-info h3{
+.personal-info h3 {
   text-align: center;
-  font-weight:600;
+  font-weight: 600;
   width: 100%;
+}
+
+#remote-stream {
+  width: 100%;
+  height: 560px;
+}
+
+#local-stream {
+  position: absolute;
+  top: 15px;
+  left: 76px;
 }

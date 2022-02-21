@@ -40,7 +40,7 @@ function callSearchFriends(element) {
     }
 
     $.get(`/contact/search-friends/${keyword}`, function (data) {
-      $("ul#group-chat-friends").html(data);
+      $("ul#group-chat-friends").html(data); //data là html chứ ko phải json
       // Thêm người dùng vào danh sách liệt kê trước khi tạo nhóm trò chuyện
       addFriendsToGroup();
       // Action hủy việc tạo nhóm trò chuyện
@@ -64,10 +64,24 @@ function callCreateGroupChat() {
       return false;
     }
 
+    let membersFinal=[];
     let arrayIds = [];
+
     $("ul#friends-added").find("li").each(function (index, item) {
       arrayIds.push({ "userId": $(item).data("uid") });
+      membersFinal.push({
+        "id":$(item).data("uid"),
+        "avatar":$(item).find(".user-avatar img").attr('src'),
+        "username":$(item).find(".user-name p").text().trim(),
+        "address":$(item).find(".user-address span").text().trim()
+      })
     });
+    membersFinal.push({
+      "id":$('#dropdown-navbar-user').data("uid"),
+      "avatar":$("#navbar-avatar").attr('src'),
+      "username":$("#navbar-username").text().trim(),
+      "address":$("#input-change-address").val().trim()
+    })
 
     Swal.fire({
       title: `Are you sure you want to create a chat group &nbsp;${groupChatName} &nbsp;?`,
@@ -85,6 +99,7 @@ function callCreateGroupChat() {
         arrayIds: JSON.stringify(arrayIds),
         groupChatName: groupChatName
       }, function (data) {
+        console.log(data);
         //B01 ẩn modal tạo nhóm trò chuyện mới sau khi tạo thành công nhóm trò chuyện
         $("#input-name-group-chat").val();
         $("#btn-cancel-group-chat").click();
@@ -92,16 +107,16 @@ function callCreateGroupChat() {
         //B02 handle leftSide.ejs
         let subGroupChatName = data.groupChat.name;
         if (subGroupChatName.length > 15) {
-          subGroupChatName = subGroupChatName.substr(0, 14);
+          subGroupChatName = subGroupChatName.substr(0, 14)+'...';
         }
         let leftSideData = `<a href="#uid_${data.groupChat._id}" class="room-chat" data-target="#to_${data.groupChat._id}">
                               <li class="person group-chat" data-chat="${data.groupChat._id}">
                                   <div class="left-avatar">
-                                      <img src="images/users/group-avatar-trungquandev.png" alt="">
+                                      <img src="images/users/group-avatar.png" alt="">
                                   </div>
                                   <span class="name">
                                       <span class="group-chat-name">
-                                          ${subGroupChatName}<span>...</span>
+                                          ${subGroupChatName}<span></span>
                                       </span>
                                   </span>
                                   <span class="time"></span>
@@ -115,68 +130,72 @@ function callCreateGroupChat() {
         let rightSideData = `
           <div class="right tab-pane" data-chat="${data.groupChat._id}" id="to_${data.groupChat._id}">
             <div class="top">
-              <span>To: <span class="name">${data.groupChat.name}</span></span>
+              <span>To: <span class="name" style="color: #FF7675;">
+              ${data.groupChat.name} Group
+              </span></span>
+              <span>
               <span class="chat-menu-right">
-                <a href="#attachmentsModal_${data.groupChat._id}" class="show-attachments" data-toggle="modal">
-                  Tệp đính kèm
-                  <i class="fa fa-paperclip"></i>
-                </a>
+                  <a title='Attachments' href="#attachmentsModal_${data.groupChat._id}" class="show-attachments"
+                      data-toggle="modal">
+                      
+                      <i class="fa fa-paperclip"></i>
+                  </a>
               </span>
               <span class="chat-menu-right">
-                <a href="javascript:void(0)">&nbsp;</a>
+                  <a href="javascript:void(0)">&nbsp;</a>
               </span>
               <span class="chat-menu-right">
-                <a href="#imagesModal_${data.groupChat._id}" class="show-images" data-toggle="modal">
-                  Images
-                  <i class="fa fa-photo"></i>
-                </a>
+                  <a title='Images' href="#imagesModal_${data.groupChat._id}" class="show-images" data-toggle="modal">
+                      
+                      <i class="fa fa-photo"></i>
+                  </a>
               </span>
               <span class="chat-menu-right">
-                <a href="javascript:void(0)">&nbsp;</a>
+                  <a href="javascript:void(0)">&nbsp;</a>
               </span>
               <span class="chat-menu-right">
-                <a href="#groupMembersModal_${data.groupChat._id}" class="number-members" data-toggle="modal">
-                  <span class="show-number-members">${data.groupChat.userAmount}</span>
-                    <i class="fa fa-users"></i>
-                </a>
+                  <a title='Members' href="#groupMembersModal_${data.groupChat._id}" class="number-members" data-toggle="modal">
+                      <span class="show-number-members">
+                          ${data.groupChat.userAmount}
+                      </span>
+                      <i class="fa fa-users"></i>
+                  </a>
               </span>
               <span class="chat-menu-right">
-                <a href="javascript:void(0)">&nbsp;</a>
+                  <a href="javascript:void(0)">&nbsp;</a>
               </span>
-              <span class="chat-menu-right">
-                <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
-                  <span class="show-number-messages">${data.groupChat.messageAmount}</span>
-                  <i class="fa fa-comments-o"></i>
-                </a>
-              </span>
+          </span>
             </div>
             <div class="content-chat">
               <div class="chat chat-in-group" data-chat="${data.groupChat._id}"></div>
             </div>
             <div class="write" data-chat="${data.groupChat._id}">
-              <input type="text" id="write-chat-${data.groupChat._id}" class="write-chat chat-in-group" data-chat="${data.groupChat._id}">
-              <div class="icons">
-                <a href="#" class="icon-chat" data-chat="${data.groupChat._id}"><i class="fa fa-smile-o"></i></a>
-                <label for="image-chat-${data.groupChat._id}">
-                  <input type="file" id="image-chat-${data.groupChat._id}" name="my-image-chat" class="image-chat chat-in-group" data-chat="${data.groupChat._id}">
-                  <i class="fa fa-photo"></i>
-                </label>
-                <label for="attachment-chat-${data.groupChat._id}">
-                  <input type="file" id="attachment-chat-${data.groupChat._id}" name="my-attachment-chat" class="attachment-chat chat-in-group" data-chat="${data.groupChat._id}">
-                  <i class="fa fa-paperclip"></i>
-                </label>
-                <a href="javascript:void(0)" id="video-chat-group">
-                  <i class="fa fa-video-camera"></i>
-                </a>
-              </div>
+                        <input type="text" id="write-chat-${data.groupChat._id}" class="write-chat chat-in-group"
+                            data-chat="${data.groupChat._id}">
+                        <div class="icons">
+                            <a href="#" class="icon-chat" data-chat="${data.groupChat._id}"><i class="fa fa-smile-o"></i></a>
+                            <label title="Images" for="image-chat-${data.groupChat._id}">
+                                <input type="file" id="image-chat-${data.groupChat._id}" name="my-image-chat"
+                                    class="image-chat chat-in-group" data-chat="${data.groupChat._id}">
+                                <i class="fa fa-photo"></i>
+                            </label>
+                            <label title="Attachments" for="attachment-chat-${data.groupChat._id}">
+                                <input type="file" id="attachment-chat-${data.groupChat._id}" name="my-attachment-chat"
+                                    class="attachment-chat chat-in-group" data-chat="${data.groupChat._id}">
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <a class="icon-send" data-chat="${data.groupChat._id}"><i class="fa fa-send-o"></i></a>
+                        </div>
+                    </div>
             </div>
-          </div>
         `;
         $("#screen-chat").prepend(rightSideData);
 
         //B04 call function changeSreenChat in mainConfig
         changeScreenChat();
 
+
+        
         //B05 handle image modal
         let imageModalData = `
           <div class="modal fade" id="imagesModal_${data.groupChat._id}" role="dialog">
@@ -225,7 +244,9 @@ function callCreateGroupChat() {
                       <h4 class="modal-title">Chat group members</h4>
                   </div>
                   <div class="modal-body">
-                    <ul class="membersList"></ul>              
+                    <ul class="membersList">
+
+                    </ul>              
                   </div>
               </div>
             </div>
@@ -233,8 +254,54 @@ function callCreateGroupChat() {
           `;
         $("body").append(groupMembersModalData);
 
+        let members = membersFinal.map(function(user) { 
+          if(user.id===$('#dropdown-navbar-user').data("uid")){
+            return ` <li class="_membersList" data-uid="${user._id}">
+            <div class="contactPanel">
+                <div class="user-avatar">
+                    <img src="${user.avatar}" alt="">
+                </div>
+                <div class="user-name is-you">
+                    <p>
+                        ${user.username}
+                    </p>
+                </div>
+                <br>
+                <div class="user-address">
+                    <span>&nbsp ${user.address}</span>
+                </div>
+                <div data-uid="${user._id}" class="is-you">
+                    <span style="font-weight: bold;">( You )</span>
+                </div>
+            </div>
+        </li>
+            `
+          }
+          return `<li class="_membersList" data-uid="${user.id}">
+             <div class="contactPanel">
+                 <div class="user-avatar">
+                     <img src="${user.avatar}" alt="">
+                 </div>
+                 <div class="user-name">
+                     <p>
+                         ${user.username}
+                     </p>
+                 </div>
+                 <br>
+                 <div class="user-address">
+                     <span>&nbsp${user.address}</span>
+                 </div>
+                 <div class="user-talk" data-uid="${user.id}">
+                     Chat
+                 </div>
+             </div>
+           </li>`                                    
+        });
+
+        $(`#groupMembersModal_${data.groupChat._id}`).find(".membersList").append(members);
+
         //B08 emit created new group
-        socket.emit("new-group-created", { groupChat: data.groupChat });
+        socket.emit("new-group-created", { groupChat: data.groupChat, membersFinal: membersFinal });
 
         //B10 update online
         socket.emit("check-status");
@@ -253,21 +320,21 @@ $(document).ready(function () {
   $("#btn-search-friends-to-add-group-chat").bind("click", callSearchFriends);
   callCreateGroupChat();
   socket.on("response-new-group-created", function (response) {
-    console.log('vao day');
+    console.log(response);
     //B01 ẩn modal tạo nhóm trò chuyện mới sau khi tạo thành công nhóm trò chuyện
     //B02 handle leftSide.ejs
     let subGroupChatName = response.groupChat.name;
     if (subGroupChatName.length > 15) {
-      subGroupChatName = subGroupChatName.substr(0, 14);
+      subGroupChatName = subGroupChatName.substr(0, 14)+'...';
     }
     let leftSideData = `<a href="#uid_${response.groupChat._id}" class="room-chat" data-target="#to_${response.groupChat._id}">
                           <li class="person group-chat" data-chat="${response.groupChat._id}">
                               <div class="left-avatar">
-                                  <img src="images/users/group-avatar-trungquandev.png" alt="">
+                                  <img src="images/users/group-avatar.png" alt="">
                               </div>
                               <span class="name">
                                   <span class="group-chat-name">
-                                      ${subGroupChatName}<span>...</span>
+                                      ${subGroupChatName}<span></span>
                                   </span>
                               </span>
                               <span class="time"></span>
@@ -280,62 +347,64 @@ $(document).ready(function () {
     //B03 handle rightSide
     let rightSideData = `
       <div class="right tab-pane" data-chat="${response.groupChat._id}" id="to_${response.groupChat._id}">
-        <div class="top">
-          <span>To: <span class="name">${response.groupChat.name}</span></span>
-          <span class="chat-menu-right">
-            <a href="#attachmentsModal_${response.groupChat._id}" class="show-attachments" data-toggle="modal">
-              Tệp đính kèm
+      <div class="top">
+      <span>To: <span class="name" style="color: #FF7675;">
+      ${response.groupChat.name} Group
+      </span></span>
+      <span>
+      <span class="chat-menu-right">
+          <a title='Attachments' href="#attachmentsModal_${response.groupChat._id}" class="show-attachments"
+              data-toggle="modal">
+              
               <i class="fa fa-paperclip"></i>
-            </a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="javascript:void(0)">&nbsp;</a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="#imagesModal_${response.groupChat._id}" class="show-images" data-toggle="modal">
-              Images
+          </a>
+      </span>
+      <span class="chat-menu-right">
+          <a href="javascript:void(0)">&nbsp;</a>
+      </span>
+      <span class="chat-menu-right">
+          <a title='Images' href="#imagesModal_${response.groupChat._id}" class="show-images" data-toggle="modal">
+              
               <i class="fa fa-photo"></i>
-            </a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="javascript:void(0)">&nbsp;</a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="#groupMembersModal_${response.groupChat._id}" class="number-members" data-toggle="modal">
-              <span class="show-number-members">${response.groupChat.userAmount}</span>
-                <i class="fa fa-users"></i>
-            </a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="javascript:void(0)">&nbsp;</a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
-              <span class="show-number-messages">${response.groupChat.messageAmount}</span>
-              <i class="fa fa-comments-o"></i>
-            </a>
-          </span>
-        </div>
+          </a>
+      </span>
+      <span class="chat-menu-right">
+          <a href="javascript:void(0)">&nbsp;</a>
+      </span>
+      <span class="chat-menu-right">
+          <a title='Members' href="#groupMembersModal_${response.groupChat._id}" class="number-members" data-toggle="modal">
+              <span class="show-number-members">
+                  ${response.groupChat.userAmount}
+              </span>
+              <i class="fa fa-users"></i>
+          </a>
+      </span>
+      <span class="chat-menu-right">
+          <a href="javascript:void(0)">&nbsp;</a>
+      </span>
+  </span>
+    </div>
         <div class="content-chat">
           <div class="chat chat-in-group" data-chat="${response.groupChat._id}"></div>
         </div>
         <div class="write" data-chat="${response.groupChat._id}">
-          <input type="text" id="write-chat-${response.groupChat._id}" class="write-chat chat-in-group" data-chat="${response.groupChat._id}">
-          <div class="icons">
+        <input type="text" id="write-chat-${response.groupChat._id}" class="write-chat chat-in-group"
+            data-chat="${response.groupChat._id}">
+        <div class="icons">
             <a href="#" class="icon-chat" data-chat="${response.groupChat._id}"><i class="fa fa-smile-o"></i></a>
-            <label for="image-chat-${response.groupChat._id}">
-              <input type="file" id="image-chat-${response.groupChat._id}" name="my-image-chat" class="image-chat chat-in-group" data-chat="${response.groupChat._id}">
-              <i class="fa fa-photo"></i>
+            <label title="Images" for="image-chat-${response.groupChat._id}">
+                <input type="file" id="image-chat-${response.groupChat._id}" name="my-image-chat"
+                    class="image-chat chat-in-group" data-chat="${response.groupChat._id}">
+                <i class="fa fa-photo"></i>
             </label>
-            <label for="attachment-chat-${response.groupChat._id}">
-              <input type="file" id="attachment-chat-${response.groupChat._id}" name="my-attachment-chat" class="attachment-chat chat-in-group" data-chat="${response.groupChat._id}">
-              <i class="fa fa-paperclip"></i>
+            <label title="Attachments" for="attachment-chat-${response.groupChat._id}">
+                <input type="file" id="attachment-chat-${response.groupChat._id}" name="my-attachment-chat"
+                    class="attachment-chat chat-in-group" data-chat="${response.groupChat._id}">
+                <i class="fa fa-paperclip"></i>
             </label>
-            <a href="javascript:void(0)" id="video-chat-group">
-              <i class="fa fa-video-camera"></i>
-            </a>
-          </div>
+            <a class="icon-send" data-chat="${response.groupChat._id}"><i class="fa fa-send-o"></i></a>
         </div>
+    </div>
       </div>
     `;
     $("#screen-chat").prepend(rightSideData);
@@ -392,13 +461,60 @@ $(document).ready(function () {
                 <h4 class="modal-title">Chat group members</h4>
             </div>
             <div class="modal-body">
-              <ul class="membersList"></ul>              
+              <ul class="membersList">
+              </ul>              
             </div>
         </div>
       </div>
     </div>
     `;
     $("body").append(groupMembersModalData);
+
+    let members = response.membersFinal.map(function(user) { 
+      if(user.id===$('#dropdown-navbar-user').data("uid")){
+        return ` <li class="_membersList" data-uid="${user._id}">
+        <div class="contactPanel">
+            <div class="user-avatar">
+                <img src="${user.avatar}" alt="">
+            </div>
+            <div class="user-name is-you">
+                <p>
+                    ${user.username}
+                </p>
+            </div>
+            <br>
+            <div class="user-address">
+                <span>&nbsp ${user.address}</span>
+            </div>
+            <div data-uid="${user._id}" class="is-you">
+                <span style="font-weight: bold;">( You )</span>
+            </div>
+        </div>
+    </li>
+        `
+      }
+      return `<li class="_membersList" data-uid="${user.id}">
+         <div class="contactPanel">
+             <div class="user-avatar">
+                 <img src="${user.avatar}" alt="">
+             </div>
+             <div class="user-name">
+                 <p>
+                     ${user.username}
+                 </p>
+             </div>
+             <br>
+             <div class="user-address">
+                 <span>&nbsp${user.address}</span>
+             </div>
+             <div class="user-talk" data-uid="${user.id}">
+                 Chat
+             </div>
+         </div>
+       </li>`                                    
+    });
+
+    $(`#groupMembersModal_${response.groupChat._id}`).find(".membersList").append(members);
 
     //B08 emit created new group
     //B09

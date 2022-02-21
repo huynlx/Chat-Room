@@ -10,7 +10,7 @@
                     <div class="all-images" style="visibility: hidden;">
                         <% conversation.messages.forEach(function(message) { %>
                             <% if (message.messageType === "image") { %>
-                                <img src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>">
+                                <img title=<%= message.file.fileName %> src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>">
                             <% } %>
                         <% }); %>
                     </div>

@@ -1,4 +1,4 @@
-import {pushSocketIdToArray, emitNotifyToArray, removeSocketIdFromArray} from "./../../helpers/socketHelpser";
+import { pushSocketIdToArray, emitNotifyToArray, removeSocketIdFromArray } from "./../../helpers/socketHelpser";
 
 let newGroupChat = (io) => {
   let clients = {};
@@ -7,12 +7,13 @@ let newGroupChat = (io) => {
     socket.request.user.chatGroupIds.forEach(group => {
       clients = pushSocketIdToArray(clients, group._id, socket.id);
     });
-    
+
     socket.on("new-group-created", (data) => {
       clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id);
 
       let response = {
-        groupChat: data.groupChat
+        groupChat: data.groupChat,
+        membersFinal: data.membersFinal
       };
 
       data.groupChat.members.forEach(member => {

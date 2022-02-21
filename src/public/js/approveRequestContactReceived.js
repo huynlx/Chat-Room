@@ -62,41 +62,55 @@ function approveRequestContactReceived() {
                     let rightSideData = `
                         <div class="right tab-pane" data-chat="${targetId}" id="to_${targetId}">
                             <div class="top">
-                                <span>To: <span class="name">${targetName}</span></span>
-                                <span class="chat-menu-right">
-                                    <a href="#attachmentsModal_${targetId}" class="show-attachments" data-toggle="modal">
-                                        Attachments
-                                        <i class="fa fa-paperclip"></i>
-                                    </a>
+                                <span class='info-top'>
+                                    <img class="avatar-top" src="${targetAvatar}" alt="">
+                                    <span class="name">
+                                        ${targetName}
+                                    </span>
                                 </span>
-                                <span class="chat-menu-right">
-                                    <a href="javascript:void(0)">&nbsp;</a>
-                                </span>
-                                <span class="chat-menu-right">
-                                    <a href="#imagesModal_${targetId}" class="show-images" data-toggle="modal">
-                                        Images
-                                        <i class="fa fa-photo"></i>
-                                    </a>
+                                <span>
+                                    <span class="chat-menu-right">
+                                        <a title="Attachments" href="#attachmentsModal_${targetId}" class="show-attachments"
+                                            data-toggle="modal">
+                                            
+                                            <i class="fa fa-paperclip"></i>
+                                        </a>
+                                    </span>
+                                    <span class="chat-menu-right">
+                                        <a href="javascript:void(0)">&nbsp;</a>
+                                    </span>
+                                    <span class="chat-menu-right">
+                                        <a title="Images" href="#imagesModal_${targetId}" class="show-images" data-toggle="modal">
+                                            
+                                            <i class="fa fa-photo"></i>
+                                        </a>
+                                    </span>
                                 </span>
                             </div>
                             <div class="content-chat">
                                 <div class="chat" data-chat="${targetId}"></div>
                             </div>
                             <div class="write" data-chat="${targetId}">
-                                <input type="text" id="write-chat-${targetId}" class="write-chat" data-chat="${targetId}">
+                                <input type="text" id="write-chat-${targetId}" class="write-chat"
+                                    data-chat="${targetId}">
                                 <div class="icons">
-                                    <a href="#" class="icon-chat" data-chat="${targetId}"><i class="fa fa-smile-o"></i></a>
-                                    <label for="image-chat-${targetId}">
-                                        <input type="file" id="image-chat-${targetId}" name="my-image-chat" class="image-chat" data-chat="${targetId}">
+                                    <a href="#" class="icon-chat" data-chat="${targetId}"><i
+                                            class="fa fa-smile-o"></i></a>
+                                    <label title="Images" for="image-chat-${targetId}">
+                                        <input type="file" id="image-chat-${targetId}" name="my-image-chat"
+                                            class="image-chat" data-chat="${targetId}">
                                         <i class="fa fa-photo"></i>
                                     </label>
-                                    <label for="attachment-chat-${targetId}">
-                                        <input type="file" id="attachment-chat-${targetId}" name="my-attachment-chat" class="attachment-chat" data-chat="${targetId}">
+                                    <label title="Attachments" for="attachment-chat-${targetId}">
+                                        <input type="file" id="attachment-chat-${targetId}" name="my-attachment-chat"
+                                            class="attachment-chat" data-chat="${targetId}">
                                         <i class="fa fa-paperclip"></i>
                                     </label>
-                                    <a href="javascript:void(0)" id="video-chat-${targetId}" class="video-chat" data-chat="${targetId}">
-                                        <i class="fa fa-video-camera"></i>
+                                    <a title="Video Call" href="javascript:void(0)" id="video-chat-${targetId}" class="video-chat"
+                                        data-chat="${targetId}">
+                                        <i class="fa fa-phone"></i>
                                     </a>
+                                    <a title="Send message" class="icon-send" data-chat="${targetId}"><i class="fa fa-send-o"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -228,10 +242,17 @@ socket.on("response-approve-request-contact-received", function (user) {
     let rightSideData = `
         <div class="right tab-pane" data-chat="${user.id}" id="to_${user.id}">
             <div class="top">
-                <span>To: <span class="name">${user.username}</span></span>
+                <span class='info-top'>
+                    <img class="avatar-top" src="images/users/${user.avatar}" alt="">
+                    <span class="name">
+                        ${user.username}
+                    </span>
+                </span>
+                <span>
                 <span class="chat-menu-right">
-                    <a href="#attachmentsModal_${user.id}" class="show-attachments" data-toggle="modal">
-                        Tệp đính kèm
+                    <a title="Attachments" href="#attachmentsModal_${user.id}" class="show-attachments"
+                        data-toggle="modal">
+                        
                         <i class="fa fa-paperclip"></i>
                     </a>
                 </span>
@@ -239,32 +260,39 @@ socket.on("response-approve-request-contact-received", function (user) {
                     <a href="javascript:void(0)">&nbsp;</a>
                 </span>
                 <span class="chat-menu-right">
-                    <a href="#imagesModal_${user.id}" class="show-images" data-toggle="modal">
-                        Images
+                    <a title="Images" href="#imagesModal_${user.id}" class="show-images" data-toggle="modal">
+                        
                         <i class="fa fa-photo"></i>
                     </a>
                 </span>
+            </span>
             </div>
             <div class="content-chat">
                 <div class="chat" data-chat="${user.id}"></div>
             </div>
             <div class="write" data-chat="${user.id}">
-                <input type="text" id="write-chat-${user.id}" class="write-chat" data-chat="${user.id}">
-                <div class="icons">
-                    <a href="#" class="icon-chat" data-chat="${user.id}"><i class="fa fa-smile-o"></i></a>
-                    <label for="image-chat-${user.id}">
-                        <input type="file" id="image-chat-${user.id}" name="my-image-chat" class="image-chat" data-chat="${user.id}">
-                        <i class="fa fa-photo"></i>
-                    </label>
-                    <label for="attachment-chat-${user.id}">
-                        <input type="file" id="attachment-chat-${user.id}" name="my-attachment-chat" class="attachment-chat" data-chat="${user.id}">
-                        <i class="fa fa-paperclip"></i>
-                    </label>
-                    <a href="javascript:void(0)" id="video-chat-${user.id}" class="video-chat" data-chat="${user.id}">
-                        <i class="fa fa-video-camera"></i>
-                    </a>
-                </div>
+            <input type="text" id="write-chat-${user.id}" class="write-chat"
+                data-chat="${user.id}">
+            <div class="icons">
+                <a href="#" class="icon-chat" data-chat="${user.id}"><i
+                        class="fa fa-smile-o"></i></a>
+                <label title="Images" for="image-chat-${user.id}">
+                    <input type="file" id="image-chat-${user.id}" name="my-image-chat"
+                        class="image-chat" data-chat="${user.id}">
+                    <i class="fa fa-photo"></i>
+                </label>
+                <label title="Attachments" for="attachment-chat-${user.id}">
+                    <input type="file" id="attachment-chat-${user.id}" name="my-attachment-chat"
+                        class="attachment-chat" data-chat="${user.id}">
+                    <i class="fa fa-paperclip"></i>
+                </label>
+                <a title="Video Call" href="javascript:void(0)" id="video-chat-${user.id}" class="video-chat"
+                    data-chat="${user.id}">
+                    <i class="fa fa-phone"></i>
+                </a>
+                <a title="Send message" class="icon-send" data-chat="${user.id}"><i class="fa fa-send-o"></i></a>
             </div>
+        </div>
         </div>
     `;
     $("#screen-chat").prepend(rightSideData);
